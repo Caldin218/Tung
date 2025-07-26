@@ -1,0 +1,32 @@
+﻿@model ShopThoiTrangASP.Models.ProductCategory
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/LayoutSite.cshtml";
+}
+<h2 class="title text-center">Detail: @ViewBag.name</h2>
+<div class="features_items">
+    <!--features_items-->
+    <div>
+    </div>
+    <div class="col-sm-4">
+        <div class="product-image-wrapper">
+            <div class="single-products">
+                <div class="productinfo text-center">
+                    <div class="col-sm-4">
+                        <img src="~/images/home/@Model.Img" class="img-thumbnail" style="width: 100%" alt="Image">
+                    </div>
+                    <div class="col-sm-8">
+                        <h4 style="color: darkblue"><strong>Category: @Model.CatName</strong></h4>
+                        <h4 class="text-uppercase">Name: @Model.Name</h4>
+                        <h4 class="text-uppercase">Available: @Model.Number</h4>
+                        <h4 class="text-uppercase">  Price: $@Model.Price </h4>
+                        <h4 class="text-uppercase">PriceSale: @Model.PriceSale</h4>
+                        <div class="form-actions no-color">
+                            @Html.ActionLink("Back to List", "Index")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

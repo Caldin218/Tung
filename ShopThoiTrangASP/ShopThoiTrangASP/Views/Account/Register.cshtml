@@ -1,0 +1,40 @@
+﻿@model ShopThoiTrangASP.Models.User
+@{
+    ViewBag.Title = "Đăng ký";
+    Layout = "~/Views/Shared/LayoutSite.cshtml";
+
+}
+
+<h2>Đăng ký</h2>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post))
+{
+    @Html.LabelFor(m => m.FullName)
+    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+
+    @Html.LabelFor(m => m.Username)
+    @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+
+    @Html.LabelFor(m => m.Password)
+    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+
+    @Html.LabelFor(m => m.Email)
+    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+
+    @Html.LabelFor(m => m.Phone)
+    @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+
+    <br />
+    <input type="submit" class="btn btn-success" value="Đăng ký" />
+
+
+}
+@if (!ViewData.ModelState.IsValid)
+{
+    <ul class="text-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <li>@error.ErrorMessage</li>
+        }
+    </ul>
+}

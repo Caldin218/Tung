@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ShopThoiTrangASP.Models.Category>
+<!--Menu ngang-->
+<div class="header-bottom">
+    <!--header-bottom-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="mainmenu pull-left">
+                    <ul class="nav navbar-nav collapse navbar-collapse">
+                        <li><a href="@Url.Action("Index","Trangchu")" class="active"> Home</a></li>
+                        <li class="dropdown">
+                            <a>Loại sản phẩm <i class="fa fa-angle-down"></i></a>
+                            <ul role="menu" class="sub-menu">
+                                <!--...Lặp ra các thẻ <a href> cho dropdown của menu....-->
+                                @foreach (var cats in Model)
+                                {
+                    <li>
+                        <!---Khi bấm vô thẻ bất kì tương đương với chuyển action "Category" của controller "Sanpham" và gửi về các tham số catid và slug để xử lý và lọc ra dữ liệu (tức là danh sách)--->
+                        @Html.ActionLink(cats.Name, "Category", "Sanpham", new { catid = cats.ID, slug = cats.Slug, namecat = cats.Name }, null)
+                        <!--<a href="/Sanpham/Category?catid=1&slug=thoi-trang-nam" class="dropdown-item">Thời Trang Nam</a>-->
+                        <!--<a href="/Sanpham/Category?catid=2&slug=thoi-trang-nu" class="dropdown-item">Thời Trang Nữ</a>-->
+                        <!--...........................-->
+                    </li>}
+
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#">Blog<i class="fa fa-angle-down"></i></a>
+                            <ul role="menu" class="sub-menu">
+                                <li><a href="blog.html">Blog List</a></li>
+                                <li><a href="blog-single.html">Blog Single</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="contact-us.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--/header-bottom-->

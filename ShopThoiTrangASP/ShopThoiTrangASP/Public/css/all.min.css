@@ -1,0 +1,9 @@
+.features_items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+    .features_items .col-sm-4 {
+        flex: 1 1 30%; /* ?i?u ch?nh ?? phù h?p s? c?t mong mu?n */
+    }

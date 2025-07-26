@@ -1,0 +1,35 @@
+﻿@model IEnumerable<ShopThoiTrangASP.Models.Product>
+<h2 class="title text-center">@ViewBag.CatName</h2>
+<div class="features_items">
+    <!--features_items-->
+    <div>
+    </div>
+    @foreach (var pro in Model)
+    {
+        <div class="col-sm-4">
+            <div class="product-image-wrapper">
+                <div class="single-products">
+                    <div class="productinfo text-center">
+                        <a href="@Url.Action("Details", "Trangchu", new {  id = pro.ID, name =pro.Name})">
+                            <img src="~/images/home/@pro.Img" alt="@pro.Img" />
+                        </a>
+                        <h2>@pro.Price</h2>
+                        <p>@pro.Name</p>
+                        <a href="@Url.Action("OrderNow", "ShoppingCart", new { id = pro.ID })" class="btn btn-primary">
+                            <i class="fa fa-shopping-cart"></i> Add to cart
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+   
+</div>
+
+
+
+
+
+
+
+

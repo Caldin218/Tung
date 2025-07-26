@@ -1,0 +1,41 @@
+﻿@using ShopThoiTrangASP.Models;
+@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<ProductCategory>
+
+@{
+    ViewBag.Title = "ProductCategory";
+    Layout = "~/Views/Shared/LayoutSite.cshtml";
+}
+<h2 class="title text-center">@ViewBag.CatName</h2>
+<div class="container main-container">
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-sm-4 mb-4">
+                <div class="product-image-wrapper">
+                    <div class="single-products">
+                        <div class="productinfo text-center">
+                            <img src="~/images/home/@product.Img" alt="@product.Name" class="img-fluid" />
+                            <h2>@product.Price.ToString("C")</h2>
+                            <p>@product.Name</p>
+                            <a href="@Url.Action("OrderNow", "ShoppingCart", new { id = product.ID })" class="btn btn-primary">
+                                <i class="fa fa-shopping-cart"></i> Add to cart
+                            </a>
+
+                            <a href="@Url.Action("Details", "Trangchu", new { id = product.ID, name = product.Name })" class="btn btn-info mt-2">
+                                <i class="fa fa-info-circle"></i> Xem chi tiết
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="pagination"
+      Page @(Model.PageCount < @Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+      @Html.PagedListPager(Model, page => Url.Action("Category", "Sanpham", new { page = page, catid = ViewBag.catid, slug = ViewBag.slug, namecat = ViewBag.namecat}))
+    </div>
+
+</div>

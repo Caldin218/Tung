@@ -1,0 +1,139 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/LayoutAdmin.cshtml";
+}
+
+
+<h2 style="text-align:center">Dashboard</h2>
+
+<label for="FromDate">Ngày bắt đầu</label>
+<input type="date" id="FromDate" name="FromDate">
+<label for="ToDate">Ngày kết thúc</label>
+<input type="date" id="ToDate" name="ToDate">
+<button id="btnFilter">Lọc</button>
+
+<!------------------------------------VÙNG THỂ HIỆN GIAO DIỆN CHART------------------------------------------>
+<div class="position-relative mb-4 " style="height:660px">
+    <canvas id="Chart" height="350"></canvas>
+</div>
+<!------------------------------------VÙNG THỂ HIỆN GIAO DIỆN CHART------------------------------------------>
+<!------------------------------------GỌI MENU (API) ĐỂ LẤY DATA------------------------------------------>
+<script>
+    // Biến toàn cục để lưu dữ liệu trả về từ AJAX
+    var arrDoanhThu = [];
+    var arrLoiNhuan = [];
+    var arrDate = [];
+    var chartInstance = null; // Biến toàn cục để giữ đối tượng biểu đồ
+
+    // Lắng nghe sự kiện click vào nút lọc
+    $('#btnFilter').click(function () {
+        // Lấy giá trị ngày bắt đầu và ngày kết thúc từ các trường nhập liệu
+        var fromDate = $('#FromDate').val(); // Lấy giá trị từ input Ngày bắt đầu
+        var toDate = $('#ToDate').val(); // Lấy giá trị từ input Ngày kết thúc
+
+        // Gửi ajax với tham số FromDate và ToDate từ input
+        $.ajax({
+            // Chỉ định đến Action
+            url: '/Admin/Statistical/GetStatistical', //  URL là địa chĩ nhà của API
+            //Xác định phương thức giao tiếp
+            type: 'GET',
+            //Gửi tham số về Action
+            data: {
+                FromDate: fromDate,
+                ToDate: toDate
+            },
+            // Sau khi gửi Tham số Xong cho Action thì Server Trả về cho Action đó và nó mặc định tự động gửi lại dữ liệu đó trong hàm success cụ thể là đối tượng response
+            success: function (response) {
+                // Reset mảng dữ liệu cũ trước khi nhận dữ liệu mới
+                arrDoanhThu = []; //Gán Mảng rỗng vào biến
+                arrLoiNhuan = []; //Gán Mảng rỗng vào biến
+                arrDate = []; //Gán Mảng rỗng vào biến
+
+                $.each(response, function (i, item)  //duyệt mảng đối tượng
+                {
+                    var strDate = moment(item.Date).format('DD/MM/YYYY');
+                    arrDate.push(strDate);           // Thêm vào mảng ngày
+                    arrDoanhThu.push(item.DoanhThu); // Thêm vào mảng doanh thu
+                    arrLoiNhuan.push(item.LoiNhuan); // Thêm vào mảng lợi nhuận
+                });
+
+                renderChart(); // Gọi hàm vẽ biểu đồ
+            }
+        });
+    });
+</script>
+<!------------------------------------GỌI MENU (API) ĐỂ LẤY DATA------------------------------------------>
+<!------------------------------------KHỞI TẠO HÀM VẼ CHART VỚI DATA ĐÃ XỬ LÝ------------------------------------------>
+<script>
+
+    // Hàm vẽ biểu đồ
+    function renderChart() {
+        var ctx = document.getElementById('Chart').getContext('2d');
+
+        // Kiểm tra nếu đã có biểu đồ cũ, nếu có thì hủy nó đi
+        if (chartInstance != null) {
+            chartInstance.destroy();
+        }
+
+        // Tạo biểu đồ mới
+        chartInstance = new Chart(ctx, {
+            type: 'bar', // Loại biểu đồ: cột
+            data: {
+                labels: arrDate, // Mảng ngày
+                datasets: [
+                    {
+                        label: 'Doanh thu', // Nhãn cho biểu đồ doanh thu
+                        backgroundColor: '#007bff', // Màu cột cho doanh thu (màu xanh)
+                        borderColor: '#007bff', // Màu viền cho cột doanh thu
+                        borderWidth: 1,
+                        data: arrDoanhThu // Dữ liệu doanh thu
+                    },
+                    {
+                        label: 'Lợi nhuận', // Nhãn cho biểu đồ lợi nhuận
+                        backgroundColor: '#6c757d', // Màu cột cho lợi nhuận (màu xám)
+                        borderColor: '#6c757d', // Màu viền cho cột lợi nhuận
+                        borderWidth: 1,
+                        data: arrLoiNhuan // Dữ liệu lợi nhuận
+                    }
+                ]
+            },
+            //VẼ CHART....................
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top', // Đặt vị trí của legend (chú thích)
+                        labels: {
+                            usePointStyle: true, // Hiển thị biểu tượng chấm bên cạnh mỗi mục
+                        }
+                    },
+                    tooltip: {
+                        enabled: true,
+                        mode: 'index', // Hiển thị tooltip khi di chuột qua bất kỳ cột nào
+                        intersect: false // Không bắt buộc phải di chuột đúng vào cột để hiển thị tooltip
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: false, // Không chồng các cột lại với nhau
+                        title: {
+                            display: true,
+                            text: 'Ngày' // Tiêu đề cho trục X
+                        }
+                    },
+                    y: {
+                        stacked: false, // Không chồng các cột lại với nhau trên trục Y
+                        title: {
+                            display: true,
+                            text: 'Giá trị (VND)' // Tiêu đề cho trục Y
+                        },
+                        beginAtZero: true // Đảm bảo trục Y bắt đầu từ 0
+                    }
+                }
+            }
+        });
+    }
+</script>
+<!------------------------------------KHỞI TẠO HÀM VẼ CHART VỚI DATA ĐÃ XỬ LÝ------------------------------------------>

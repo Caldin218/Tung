@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Đăng nhập";
+    Layout = "~/Views/Shared/LayoutSite.cshtml";
+}
+
+<h2>Đăng nhập</h2>
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post))
+{
+    <label>Tên đăng nhập</label>
+    <input type="text" name="username" required class="form-control" />
+
+    <label>Mật khẩu</label>
+    <input type="password" name="password" required class="form-control" />
+
+    <br />
+    <button type="submit" class="btn btn-primary">Đăng nhập</button>
+    <p class="text-danger">@ViewBag.Error</p>
+
+    <p>
+        Bạn chưa có tài khoản?
+        <a href="@Url.Action("Register", "Account")">Đăng ký</a>
+    </p>
+
+}
