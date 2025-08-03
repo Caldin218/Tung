@@ -1,0 +1,71 @@
+﻿@model IEnumerable<ShopThoiTrangASP.Models.Category>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/LayoutAdmin.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-6">
+                <strong class="text-uppercase text-danger">Thùng rác loại sp</strong>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="@Url.Action("Index","Category")" class="btn btn-sm btn-success">
+                    Quay về danh sách
+                </a>             
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-3">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th style="width:20px;" class="text-center"> # </th>
+                    <th> Tên loại sp </th>
+                    <th> Liên kết </th>
+                    <th style="width:180px;" class="text-center"> chức năng </th>
+                    <th style="width:20px;" class="text-center"> ID </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">
+                            <input name="checkID" type="checkbox" />
+                        </td>
+                        <td> @item.Name </td>
+                        <td>
+                            <a href="~/san-pham/@item.Slug">
+                                @item.Slug
+                            </a>
+                        </td>
+                        <td class="text-center">
+                          
+
+                            <a href="@Url.Action("Restore", "Category", new { @id = item.ID }) " class="btn btn-sm btn-info">
+                                Khôi phục
+                            </a>
+
+                        
+
+                            <a href="@Url.Action("Delete", "Category", new { @id = item.ID }) " class="btn btn-sm btn-danger">
+                                Xóa
+                            </a>
+                        </td>
+                        <td class="text-center"> ID </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+

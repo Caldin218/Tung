@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@Page.Title</title>
+    <link href="~/Content/bootstrap.rtl.min.css" rel="stylesheet" />
+    <link href="~/Public/Css/LayoutAdmin.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
+    <!---------------------------------------CHART SCRIPTS----------------------------------------------------------->
+    <!-- jQuery -->
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="~/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE -->
+    <script src="~/dist/js/adminlte.js"></script>
+    <script src="~/plugins/moment/moment.min.js"></script>
+    <script src="~/plugins/chart.js/Chart.min.js"></script>
+    <script src="~/dist/js/demo.js"></script>
+    <script src="~/dist/js/pages/dashboard3.js"></script>
+    <!---------------------------------------CHART SCRIPTS----------------------------------------------------------->
+    @RenderSection("head", required: false)
+</head>
+<body>
+    <section class="clearfix header bg-danger">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="@Url.Action("Index","BangDieuKhien")">ADMIN - ShopThoiTrangASP</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="@Url.Action("Index","BangDieuKhien")">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Bài viết
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="@Url.Action("Index","Post")">danh sách bài viết</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("Create","Post")">thêm bài viết</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("Index","Topic")">danh sách chủ đề</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("Create","Topic")">thêm loại chủ đề</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Sản phẩm
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="@Url.Action("Index","Product")">Danh sách sản phẩm</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("Create","Product")">Thêm sản phẩm</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("Index","Category")">Danh sách loại</a></li>
+                                    <li><a class="dropdown-item" href="@Url.Action("Create","Category")">Thêm loại</a></li>
+                                   
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </section>
+
+    <section class="clearfix maincontent">
+        <div class="container-fluid"></div>
+        @RenderBody()
+    </section>
+
+    <section class="clearfix footer bg-danger">
+        <div class="container-fluid text-white text-center py-3">
+            Designed by: Caldin
+        </div>
+    </section>
+    @RenderSection("footer", required: false)
+
+</body>
+</html>
